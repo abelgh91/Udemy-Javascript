@@ -34,5 +34,5 @@ por nosotros con un alias*/
 // import  getUsuario  from './defaultExport';
 // console.log(getUsuario());
 
-/*solo importa código que no sean funciones, como por ejemplo un if() o cosas asi*/
+/*solo importa código que no sean funciones*/
 import './emptyExport';
