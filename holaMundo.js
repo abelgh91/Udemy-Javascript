@@ -1,1 +1,0 @@
-alert('HolaMundo, desde archivo js');

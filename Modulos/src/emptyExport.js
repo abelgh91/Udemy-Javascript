@@ -1,0 +1,1 @@
+console.log('Soy código que se ejecuta desde empty export');
