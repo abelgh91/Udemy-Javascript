@@ -1,60 +1,4 @@
-'use strict';
-
-const producto$1 = document.getElementById('producto');
-const productoImagen = producto$1.querySelector('.producto__imagen');
-const thumbs = producto$1.querySelector('.producto__thumbs');
-
-//Color
-const propiedadColor = producto$1.querySelector('#propiedad-color');
-
-//Cantidad
-const btnIncrementarCantidad = producto$1.querySelector('#incrementar-cantidad');
-const btnDisminuirCantidad = producto$1.querySelector('#disminuir-cantidad');
-const inputCantidad = producto$1.querySelector('#cantidad');
-//Funcionalidad de los thumbnails
-
-thumbs.addEventListener('click', (e)=>{
-    if(e.target.tagName === 'IMG'){
-        const imagenSrc = e.target.src;
-        //Obtenemos la posicion del ultimo slash
-        const lastIndex = imagenSrc.lastIndexOf('/');
-        //Cortamos el string
-        const nombreImagen = imagenSrc.substring(lastIndex + 1);
-        //Cambiamos la ruta de la imagen principal
-        productoImagen.src = `./img/tennis/${nombreImagen}`;
-    }
-});
-
-propiedadColor.addEventListener('click', (e)=>{
-    if(e.target.tagName === 'INPUT'){
-
-        productoImagen.src = `./img/tennis/${e.target.value}.jpg`;
-    }
-    
-});
-
-
-btnIncrementarCantidad.addEventListener('click', (e)=>{
-    inputCantidad.value = parseInt(inputCantidad.value) + 1;
-});
-btnDisminuirCantidad.addEventListener('click', (e)=>{
-    if(parseInt(inputCantidad.value) > 1){
-        inputCantidad.value = parseInt(inputCantidad.value) - 1;
-    } 
-});
-
-var data = {
-    productos: [
-        {
-            id: '1',
-            nombre: 'Tennis Converse Standard.',
-            descripcion: 'Lorem ipsum dolor sit amet.',
-            precio: 90.00,
-            colores: ['negro', 'rojo', 'amarillo'],
-            tamaños: ['38', '39', '40', '41', '42', '43'],
-        },
-    ],
-};
+import data from './data/productos';
 
 const botonesAbrirCarrito = document.querySelectorAll('[data-accion="abrir-carrito"]');
 const botonesCerrarCarrito = document.querySelectorAll('[data-accion="cerrar-carrito"]');
@@ -77,10 +21,10 @@ const renderCarrito = () => {
     //comprobamos si hay productos
     if(carrito.length < 1){
         //ponemos la clase del carrito vacio
-        ventanaCarrito.classList.add('carrito--vacio');
-    }else {
+        ventanaCarrito.classList.add('carrito--vacio')
+    }else{
         //eliminar la clase del carrito vacio
-        ventanaCarrito.classList.remove('carrito--vacio');
+        ventanaCarrito.classList.remove('carrito--vacio')
         //iteramos sobre cada prodcuto del carrito y lo mostramos
         carrito.forEach((productoCarrito)=>{
 
@@ -90,16 +34,16 @@ const renderCarrito = () => {
             if(productoBaseDatos.id == productoCarrito.id){
                 productoCarrito.precio = productoBaseDatos.precio;
 
-                total += productoBaseDatos.precio * productoCarrito.cantidad;
+                total += productoBaseDatos.precio * productoCarrito.cantidad
             }
         });
 
         //establecemos la ruta de la imagen que vamos a querer mostrar
         let thumbSrc = producto.querySelectorAll('.producto__thumb-img')[0].src;
         if(productoCarrito.color === 'rojo'){
-            thumbSrc = './img/thumbs/rojo.jpg';
+            thumbSrc = './img/thumbs/rojo.jpg'
         }else if(productoCarrito.color === 'amarillo'){
-            thumbSrc = './img/thumbs/amarillo.jpg';
+            thumbSrc = './img/thumbs/amarillo.jpg'
         }
 
         //creamos una plantilla HTML
@@ -161,7 +105,7 @@ botonesAbrirCarrito.forEach((boton) => {
 //Cerrar carrito
 botonesCerrarCarrito.forEach((boton) => {
     boton.addEventListener('click', (e)=>{
-        ventanaCarrito.classList.remove('carrito--active');
+        ventanaCarrito.classList.remove('carrito--active')
     });
 });
 
@@ -189,7 +133,7 @@ btnAgregarCarrito.addEventListener('click', (e)=>{
                 tamaño: tamaño
             });
         }
-    }else {
+    }else{
         carrito.push({
             id: id,
             nombre: nombre,
@@ -233,35 +177,4 @@ ventanaCarrito.addEventListener('click', (e) =>{
 ventanaCarrito.querySelector('#carrito__btn-comprar').addEventListener('click', ()=>{
     console.log('enviado peticion de compra!');
     console.log(carrito);
-});
-
-class Tabs {
-    constructor(idElemento){
-        this.tabs = document.getElementById(idElemento);
-        this.nav = this.tabs.querySelector('.tabs');
-
-        //comprobamos que el elemento que clickemos tenga la clase tabs__link
-        this.nav.addEventListener('click', (e)=>{
-            if([...e.target.classList].includes('tabs__button')){
-                //obtenemos la tab q queremos mostrar
-                const tab = e.target.dataset.tab;
-
-                //quitamos la clase activa de alguna otra que la tenga
-                if(this.tabs.querySelector('.tab--active')){
-                    this.tabs.querySelector('.tab--active').classList.remove('tab--active');
-                }
-                
-                if(this.tabs.querySelector('.tabs__button--active')){
-                    this.tabs.querySelector('.tabs__button--active').classList.remove('tabs__button--active');
-                }
-
-                //agregamos la clase activa al tab
-                this.tabs.querySelector(`#${tab}`).classList.add('tab--active');
-
-                //agregamos la clase active al boton
-                e.target.classList.add('tabs__button--active');
-            }        });
-    }
-}
-
-new Tabs('mas-informacion');
+})
