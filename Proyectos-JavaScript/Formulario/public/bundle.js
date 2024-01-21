@@ -1,4 +1,73 @@
 'use strict';
 
-console.log('index.js');
+const formulario$1 = document.getElementById('formulario');
+
+const validarCantidad = () =>{
+    // Aceptamos cualquier digito (0-9), y un punto con decimales (opcional)
+    const expRegCantidad = /^\d+(\.\d+)?$/;
+    // Obtenemos el input cantidad
+    const inputCantidad = formulario$1.cantidad;
+
+    if(expRegCantidad.test(inputCantidad.value)){
+        inputCantidad.classList.remove('formulario__input--error');
+        return true;
+    }else {
+        inputCantidad.classList.add('formulario__input--error');
+        return false;
+    }
+};
+
+const marcarPaso = (paso) => {
+    document.querySelector(`.linea-pasos [data-paso="${paso}"] span`).classList.add('linea-pasos__paso-check--checked');
+    
+};
+
+const siguientePaso = () =>{
+    // Creamos un arreglo con los pasos.
+    const pasos = [...document.querySelectorAll('.linea-pasos__paso')];
+
+    // Obtenemos el paso activo.
+    const pasoActivo = document.querySelector('.linea-pasos__paso-check--active').closest('.linea-pasos__paso');
+    
+    // Obtenemos el index del paso activo.
+    const indexPasoActivo = pasos.indexOf(pasoActivo);
+
+    // Comprobamos si hay mas pasos.
+    if(indexPasoActivo < pasos.length - 1){
+        // Eliminamos la clase de paso activo.
+        pasoActivo.querySelector('span').classList.remove('linea-pasos__paso-check--active');
+        // Ponemos la clase de paso activo al siguiente elemento.
+        pasos[indexPasoActivo + 1].querySelector('span').classList.add('linea-pasos__paso-check--active');
+
+        const id = pasos[indexPasoActivo + 1].dataset.paso;
+        document.querySelector(`.formulario__body [data-paso="${id}"]`).scrollIntoView({
+            inLine: 'start',
+            behavior: 'smooth'
+        });
+    }
+};
+
+const formulario = document.getElementById('formulario');
+
+// Reiniciando scroll al cargar el formulario.
+formulario.querySelector('.formulario__body').scrollLeft = 0;
+// Eventlistener para comprobar los campos de formulario cuando el usuario corrige.
+formulario.addEventListener('keyup', (e)=>{
+    if(e.target.tagName === 'INPUT'){
+        if(e.target.id === 'cantidad'){
+            validarCantidad();
+        }
+    }
+});
+
+const btnFormulario = document.getElementById('formulario__btn');
+btnFormulario.addEventListener('click', (e)=>{
+    e.preventDefault();
+
+    document.querySelector('.linea-pasos__paso-check--active').closest('.linea-pasos__paso').dataset.paso;
+    if(validarCantidad()){
+        marcarPaso('cantidad');
+        siguientePaso();
+    }
+});
 //# sourceMappingURL=bundle.js.map
