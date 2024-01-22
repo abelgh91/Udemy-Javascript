@@ -13,6 +13,6 @@ const validarCantidad = () =>{
         inputCantidad.classList.add('formulario__input--error')
         return false;
     }
-}
+};
 
 export default validarCantidad;
