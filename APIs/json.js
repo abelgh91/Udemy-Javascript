@@ -51,6 +51,8 @@ const datos = `
 	📌 parse()
 	Le pasamos una cadena de texto con formato JSON y nos devuelve objeto de javascript.
 */
+// const objeto = JSON.parse(datos)
+// console.log(objeto)
 console.log(JSON.parse(datos));
 
 /*
